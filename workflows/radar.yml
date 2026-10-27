@@ -1,0 +1,32 @@
+name: ZeroPrice radar
+
+on:
+  schedule:
+    # Cada 15 minutos, 24 h. GitHub puede retrasar la ejecución unos minutos.
+    - cron: "*/15 * * * *"
+  workflow_dispatch:  # permite lanzarlo a mano desde la pestaña Actions
+
+permissions:
+  contents: write
+
+jobs:
+  radar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - name: Rastrear tiendas
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python radar.py
+      - name: Publicar resultado
+        run: |
+          git config user.name "zeroprice-bot"
+          git config user.email "zeroprice-bot@users.noreply.github.com"
+          git add docs/index.html data/
+          git diff --cached --quiet || git commit -m "Radar: revisión automática"
+          git push
