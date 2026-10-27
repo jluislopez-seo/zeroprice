@@ -1,0 +1,14 @@
+# ZeroPrice — tiendas a rastrear
+# Añade una entrada por ficha. El radar primero busca el precio en los datos
+# estructurados de la tienda (schema.org); price_selector solo es un plan B
+# si la tienda no los publica. Sustituye los ejemplos por tus URLs reales.
+stores:
+  # - name: "Nombre del producto"
+  #   store: "Nombre de la tienda"
+  #   url: "https://tienda.com/producto/..."
+  #   price_selector: ".price"   # opcional, CSS de la tienda
+  #   stock_selector: ".stock"   # opcional
+
+  - name: "Tecnología"
+    store: "Mediamarkt"
+    url: "https://www.mediamarkt.es/es/"
